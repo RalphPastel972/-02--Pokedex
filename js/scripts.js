@@ -6,19 +6,24 @@ let pokemonRepository = (function () {
     { name: "Charmander", type: ["Monster", "Dragon"], height: 2, weight: 100 },
   ];
 
-
-  pokemonList.forEach((pokemonPassport) => {
-    console.log(pokemonPassport);
-
-    if (pokemonPassport.height < 1) {
-      document.write(
-        `${pokemonPassport.name} has a height of ${pokemonPassport.height}m - Waw! That's small !<br>`
-      );
-    } else {
-      document.write(
-        `${pokemonPassport.name} has a height of ${pokemonPassport.height}m<br>`
-      );
-    }
-  });
-
+  return {
+    add: function (pokemon) {
+      pokemonList.push(pokemon);
+    },
+    getAll: function () {
+      return pokemonList;
+    },
+  };
 })();
+
+pokemonRepository.getAll().forEach((pokemonPassport) => {
+  if (pokemonPassport.height < 1) {
+    document.write(
+      `${pokemonPassport.name} has a height of ${pokemonPassport.height}m - Waw! That's small !<br>`
+    );
+  } else {
+    document.write(
+      `${pokemonPassport.name} has a height of ${pokemonPassport.height}m<br>`
+    );
+  }
+});
