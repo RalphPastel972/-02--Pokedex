@@ -13,17 +13,21 @@ let pokemonRepository = (function () {
     getAll: function () {
       return pokemonList;
     },
+    displayAllPokemonsInButtons: function () {
+      pokemonRepository.getAll().forEach((pokemonPassport) => {
+        let ulList = document.querySelector(".pokemon_list");
+        console.log(ulList);
+        let ButtonNodeCreation = document.createElement("button");
+        let liNodeCreation = document.createElement("li");
+        let liElementCreation = ulList.appendChild(liNodeCreation);
+        let ButtonElementCreation =
+        liElementCreation.appendChild(ButtonNodeCreation);
+        ButtonElementCreation.classList.add("Poke_button");
+        console.log(ButtonElementCreation);
+        ButtonElementCreation.innerText = pokemonPassport.name;
+      });
+    },
   };
 })();
 
-pokemonRepository.getAll().forEach((pokemonPassport) => {
-  if (pokemonPassport.height < 1) {
-    document.write(
-      `${pokemonPassport.name} has a height of ${pokemonPassport.height}m - Waw! That's small !<br>`
-    );
-  } else {
-    document.write(
-      `${pokemonPassport.name} has a height of ${pokemonPassport.height}m<br>`
-    );
-  }
-});
+pokemonRepository.displayAllPokemonsInButtons();
