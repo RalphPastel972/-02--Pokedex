@@ -16,14 +16,14 @@ let pokemonRepository = (function () {
     displayAllPokemonsInButtons: function () {
       pokemonRepository.getAll().forEach((pokemonPassport) => {
         let ulList = document.querySelector(".pokemon_list");
-        console.log(ulList);
         let ButtonNodeCreation = document.createElement("button");
         let liNodeCreation = document.createElement("li");
         let liElementCreation = ulList.appendChild(liNodeCreation);
         let ButtonElementCreation =
         liElementCreation.appendChild(ButtonNodeCreation);
         ButtonElementCreation.classList.add("Poke_button");
-        console.log(ButtonElementCreation);
+        ButtonElementCreation.addEventListener("click", function (event) {
+          console.log(pokemonPassport.name)});
         ButtonElementCreation.innerText = pokemonPassport.name;
       });
     },
