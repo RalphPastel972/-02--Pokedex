@@ -1,6 +1,6 @@
 let pokemonRepository = (function () {
   let pokemonList = [];
-  let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=100";
+  let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=1302";
 
   return {
     LoadList: function () {
@@ -13,6 +13,7 @@ let pokemonRepository = (function () {
             pokemonRepository.addListItem(fetchedPokemonFromAPI)
           );
         })
+        .then(() => {pokemonRepository.loadDetails()})
         .then(() => {
           pokemonRepository.displayAllPokemonsInButtons();
           console.log(pokemonList);
@@ -26,6 +27,19 @@ let pokemonRepository = (function () {
 
     addListItem: function (pokemon) {
       pokemonList.push(pokemon);
+    },
+
+    loadDetails: function () {
+      pokemonList.forEach((pokemonItem) => {
+        fetch(pokemonItem.url).then((callbackAPI) => {
+          return callbackAPI.json();
+        }).then((json) => {
+          pokemonItem.height = json.height;
+          pokemonItem.weight = json.weight;
+          pokemonItem.imgUrl = json.sprites.other.dream_world.front_default;
+        })
+      });
+      console.warn(pokemonList);
     },
 
     getAll: function () {
