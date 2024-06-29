@@ -1,33 +1,48 @@
 let pokemonRepository = (function () {
-  let pokemonList = [
-    { name: "Bulbasaur", type: ["Monster", "Grass"], height: 0.7, weight: 6.9 },
-    { name: "Ivysaur", type: ["Monster", "Grass"], height: 1, weight: 13 },
-    { name: "Venusaur", type: ["Monster", "Grass"], height: 2, weight: 100 },
-    { name: "Charmander", type: ["Monster", "Dragon"], height: 2, weight: 100 },
-  ];
+  let pokemonList = [];
+  let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=100";
 
   return {
-    add: function (pokemon) {
-      pokemonList.push(pokemon);
+    LoadList: function () {
+      fetch(apiUrl)
+        .then((callbackAPI) => {
+          return callbackAPI.json();
+        })
+        .then((json) => {
+          json.results.forEach((fetchedPokemonFromAPI) =>
+            pokemonList.push(fetchedPokemonFromAPI)
+          );
+        })
+        .then( () => {
+          pokemonRepository.displayAllPokemonsInButtons();
+        })
+
+        .catch(function (error) {
+          console.error(error);
+          console.error("it didn't work!");
+        });
     },
+
     getAll: function () {
       return pokemonList;
     },
+
     displayAllPokemonsInButtons: function () {
-      pokemonRepository.getAll().forEach((pokemonPassport) => {
+      pokemonRepository.getAll().forEach((pokemon) => {
         let ulList = document.querySelector(".pokemon_list");
         let ButtonNodeCreation = document.createElement("button");
         let liNodeCreation = document.createElement("li");
         let liElementCreation = ulList.appendChild(liNodeCreation);
         let ButtonElementCreation =
-        liElementCreation.appendChild(ButtonNodeCreation);
+          liElementCreation.appendChild(ButtonNodeCreation);
         ButtonElementCreation.classList.add("Poke_button");
-        ButtonElementCreation.addEventListener("click", function (event) {
-          console.log(pokemonPassport.name)});
-        ButtonElementCreation.innerText = pokemonPassport.name;
+        ButtonElementCreation.addEventListener("click", function () {
+          console.log(pokemon.name);
+        });
+        ButtonElementCreation.innerText = pokemon.name;
       });
     },
   };
 })();
 
-pokemonRepository.displayAllPokemonsInButtons();
+pokemonRepository.LoadList();
