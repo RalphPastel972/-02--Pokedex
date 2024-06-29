@@ -8,6 +8,11 @@ ul {
   list-style: none;
 }
 
+#loading_time {
+  color: grey;
+  font-size: medium;
+}
+
 .Poke_button {
   width: 50%;
   min-width: fit-content;

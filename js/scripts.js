@@ -4,6 +4,7 @@ let pokemonRepository = (function () {
 
   return {
     LoadList: function () {
+      pokemonRepository.showLoadingMessage();
       fetch(apiUrl)
         .then((callbackAPI) => {
           return callbackAPI.json();
@@ -16,7 +17,9 @@ let pokemonRepository = (function () {
         .then(() => {pokemonRepository.loadDetails()})
         .then(() => {
           pokemonRepository.displayAllPokemonsInButtons();
+          
           console.log(pokemonList);
+          pokemonRepository.hideLoadingMessage();
         })
 
         .catch(function (error) {
@@ -44,6 +47,14 @@ let pokemonRepository = (function () {
 
     getAll: function () {
       return pokemonList;
+    },
+
+    showLoadingMessage: function () {
+      document.getElementById("loading_time").innerText = "Fetching data from API";
+    },
+
+    hideLoadingMessage: function () {
+      document.getElementById("loading_time").innerText = "";
     },
 
     displayAllPokemonsInButtons: function () {
