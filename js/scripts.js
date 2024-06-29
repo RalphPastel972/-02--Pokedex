@@ -10,17 +10,22 @@ let pokemonRepository = (function () {
         })
         .then((json) => {
           json.results.forEach((fetchedPokemonFromAPI) =>
-            pokemonList.push(fetchedPokemonFromAPI)
+            pokemonRepository.addListItem(fetchedPokemonFromAPI)
           );
         })
-        .then( () => {
+        .then(() => {
           pokemonRepository.displayAllPokemonsInButtons();
+          console.log(pokemonList);
         })
 
         .catch(function (error) {
           console.error(error);
           console.error("it didn't work!");
         });
+    },
+
+    addListItem: function (pokemon) {
+      pokemonList.push(pokemon);
     },
 
     getAll: function () {
@@ -35,6 +40,7 @@ let pokemonRepository = (function () {
         let liElementCreation = ulList.appendChild(liNodeCreation);
         let ButtonElementCreation =
           liElementCreation.appendChild(ButtonNodeCreation);
+
         ButtonElementCreation.classList.add("Poke_button");
         ButtonElementCreation.addEventListener("click", function () {
           console.log(pokemon.name);
