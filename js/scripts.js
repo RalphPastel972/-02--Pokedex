@@ -14,10 +14,12 @@ let pokemonRepository = (function () {
             pokemonRepository.addListItem(fetchedPokemonFromAPI)
           );
         })
-        .then(() => {pokemonRepository.loadDetails()})
+        .then(() => {
+          pokemonRepository.loadDetails();
+        })
         .then(() => {
           pokemonRepository.displayAllPokemonsInButtons();
-          
+
           console.log(pokemonList);
           pokemonRepository.hideLoadingMessage();
         })
@@ -34,13 +36,15 @@ let pokemonRepository = (function () {
 
     loadDetails: function () {
       pokemonList.forEach((pokemonItem) => {
-        fetch(pokemonItem.url).then((callbackAPI) => {
-          return callbackAPI.json();
-        }).then((json) => {
-          pokemonItem.height = json.height;
-          pokemonItem.weight = json.weight;
-          pokemonItem.imgUrl = json.sprites.other.dream_world.front_default;
-        })
+        fetch(pokemonItem.url)
+          .then((callbackAPI) => {
+            return callbackAPI.json();
+          })
+          .then((json) => {
+            pokemonItem.height = json.height;
+            pokemonItem.weight = json.weight;
+            pokemonItem.imgUrl = json.sprites.other.dream_world.front_default;
+          });
       });
       console.warn(pokemonList);
     },
@@ -50,7 +54,8 @@ let pokemonRepository = (function () {
     },
 
     showLoadingMessage: function () {
-      document.getElementById("loading_time").innerText = "Fetching data from API";
+      document.getElementById("loading_time").innerText =
+        "Fetching data from API";
     },
 
     hideLoadingMessage: function () {
@@ -69,11 +74,49 @@ let pokemonRepository = (function () {
         ButtonElementCreation.classList.add("Poke_button");
         ButtonElementCreation.addEventListener("click", function () {
           console.log(pokemon.name);
+          console.log(pokemon);
+          buildModalContent(pokemon);
         });
         ButtonElementCreation.innerText = pokemon.name;
       });
     },
   };
 })();
+
+function buildModalContent(pokemonInfo) {
+  let pokemonName = document.getElementById("pokemonName");
+  let pokemonWeight = document.getElementById("pokemonWeight");
+  let pokemonHeight = document.getElementById("pokemonHeight");
+  let pokemonImgUrl = document.getElementById("pokemonPicture");
+  let modalWrapper = document.getElementById("modal_wrapper");
+  console.log(pokemonImgUrl);
+
+  pokemonName.innerText = pokemonInfo.name;
+  pokemonWeight.innerText = `Weight: ${pokemonInfo.weight}`;
+  pokemonHeight.innerText = `Height: ${pokemonInfo.height}`;
+  pokemonImgUrl.src = pokemonInfo.imgUrl;
+
+  modalWrapper.classList.remove("is_hidden");
+  console.log(pokemonInfo.imgUrl);
+  console.log(pokemonImgUrl);
+  modalManagement();
+}
+
+function modalManagement() {
+  document.getElementById("modal_wrapper").addEventListener("click", (e) => {
+    if (
+      e.target.id === "modal_wrapper" ||
+      e.target.id === "close_modal_button"
+    ) {
+      hideModal();
+    }
+    console.log(e.target.id);
+  });
+}
+
+function hideModal() {
+  let modalWrapper = document.getElementById("modal_wrapper");
+  modalWrapper.classList.add("is_hidden");
+}
 
 pokemonRepository.LoadList();

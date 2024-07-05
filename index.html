@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokédex</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Courgette&family=Honk&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
@@ -11,9 +17,26 @@
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
-    <h1>My Pokedex</h1>
+    <img
+      src="./assets/images/pokedex ralph cropped.png"
+      alt="Ralph's Pokedex"
+    />
     <h2 id="loading_time"></h2>
     <ul class="pokemon_list"></ul>
-    <script src="./js/scripts.js"></script>
+    <div id="modal_wrapper" class="is_hidden">
+      <div id="modal_window">
+        <div id="close_modal_button">X</div>
+        <img
+          id="pokemonPicture"
+          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
+          alt="pic of the selected Pokemon"
+        />
+        <h3 id="pokemonName">Pikachu</h3>
+        <h4 id="pokemonHeight"></h4>
+        <h4 id="pokemonWeight">Weight: 7</h4>
+      </div>
+
+      <script src="./js/scripts.js"></script>
+    </div>
   </body>
 </html>
