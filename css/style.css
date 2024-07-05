@@ -53,6 +53,7 @@ ul {
 #close_modal_button {
   text-align: end;
   font-size: xxx-large;
+  font-family: var(--font-weird);
 }
 
 h3 {
